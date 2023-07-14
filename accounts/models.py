@@ -59,6 +59,7 @@ class User(AbstractBaseUser):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     phone_no =models.CharField(max_length=100,unique=True)
+    username=  models.CharField(max_length=150)
     pin_code =models.CharField(max_length=150,)
     email = models.EmailField(max_length=150,unique=True)
     password = models.CharField(max_length=128)
