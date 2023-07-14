@@ -5,47 +5,90 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 
 
 
-# class accounts(BaseUserManager):
+class UserManager(BaseUserManager):
 
+     # Other fields specific to Moderator model
 
+    def create_user(self,first_name,last_name,username,email,password=None):
+        if not email:
+            raise ValueError('user must have  email address')
 
-#     # Other fields specific to Moderator model
+        if not username:
+            raise ValueError('user must have  an username')
+        
 
-#     def __str__(self):
-#         return self.username
+        user = self.model(
+            email= self.normalize_email(email),
+            username= username,
+            first_name=first_name,
+            last_name=last_name,
+        )
 
-# class User(AbstractBaseUser):
-#     first_name = models.CharField(max_length=150)
-#     last_name = models.CharField(max_length=150)
-#     email = models.EmailField()
-#     username =models.CharField(max_length=100,unique=True)
-#     password = models.CharField(max_length=128)
-#     phone_no =models.CharField(max_length=100,unique=True)
-#     pin_code =models.CharField(max_length=150,)
-#     user_image =models.ImageField(upload_to="userProfile") 
-#     address=models.CharField(max_length=300)
-
-#     #required 
-
-#     date_joined = models.DateTimeField(auto_now_add=True)
-#     last_login = models.DateTimeField(auto_now_add=True)
-#     Is_admin= models.BooleanField(default=False)
-#     Is_active= models.BooleanField(default=False)
-#     Is_staff = models.BooleanField(default=False)
-#     Is_superadmin= models.BooleanField(default=False)
-
-#     USERNAME_FIELD ='email'
-#     REQUIRED_FIELDS=['username','first_name','last_name','pin_code','address','phone_no']
-
-
-#     def __str__(self):
-#         return self.email
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
     
-#     def __str__(self):
-#         return self.Is_admin
+    def create_superuser(self,first_name,last_name,username,email,password=None):
+        user = self.create_user (
+            email= self.normalize_email(email),
+            username= username,
+            first_name=first_name,
+            last_name=last_name,
+        )
+
+        user.is_admin= True
+        user.is_active=True
+        user.is_staff=True
+        user.is_superadmin=True
+        user.save(using =self._db)
+        return user
+
+
+
+
+
+class User(AbstractBaseUser):
+    FARMER = 1
+    CUSTOMER = 2
+
+    ROLE_CHOICE = (
+        (FARMER,'farmer'),
+        (CUSTOMER,'customer')
+    )
+
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    phone_no =models.CharField(max_length=100,unique=True)
+    pin_code =models.CharField(max_length=150,)
+    email = models.EmailField(max_length=150,unique=True)
+    password = models.CharField(max_length=128)
+    user_image =models.ImageField(upload_to="userProfile") 
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE,blank=True,null=True)
+    #required 
+
+    date_joined = models.DateTimeField(auto_now_add=True)
+    last_login = models.DateTimeField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    modification_date = models.DateTimeField(auto_now=True)
+    Is_admin= models.BooleanField(default=False)
+    Is_active= models.BooleanField(default=False)
+    Is_staff = models.BooleanField(default=False)
+    Is_superadmin= models.BooleanField(default=False)
+
+    USERNAME_FIELD ='email'
+    REQUIRED_FIELDS=['username','first_name','last_name','pin_code','phone_no']
+
+    objects = UserManager()
+
+    def __str__(self): 
+        return self.email
     
-#     def has_module_perms(self,obj=None):
-#         return True
+    def has_perm(self,perm,obj=None):
+        return self.Is_admin
+    
+
+    def has_module_perms(self,obj=None):
+        return True
 
 # class Seller(AbstractBaseUser):
 #     first_name = models.CharField(max_length=150)
