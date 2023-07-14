@@ -53,13 +53,14 @@ class User(AbstractBaseUser):
 
     ROLE_CHOICE = (
         (FARMER,'farmer'),
-        (CUSTOMER,'customer')
+        (CUSTOMER,'customer'),
     )
 
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
-    phone_no =models.CharField(max_length=100,unique=True)
+    phone_no =models.CharField(max_length=100)
     username=  models.CharField(max_length=150)
+    pin_code= models.CharField(max_length=100)
     email = models.EmailField(max_length=150,unique=True)
     password = models.CharField(max_length=128)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE,blank=True,null=True)
@@ -75,7 +76,7 @@ class User(AbstractBaseUser):
     Is_superadmin= models.BooleanField(default=False)
 
     USERNAME_FIELD ='email'
-    REQUIRED_FIELDS=['username','first_name','last_name','phone_no']
+    REQUIRED_FIELDS=['username','first_name','last_name']
 
     objects = UserManager()
 
