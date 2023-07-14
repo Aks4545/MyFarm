@@ -60,10 +60,8 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=150)
     phone_no =models.CharField(max_length=100,unique=True)
     username=  models.CharField(max_length=150)
-    pin_code =models.CharField(max_length=150,)
     email = models.EmailField(max_length=150,unique=True)
     password = models.CharField(max_length=128)
-    user_image =models.ImageField(upload_to="userProfile") 
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE,blank=True,null=True)
     #required 
 
@@ -77,7 +75,7 @@ class User(AbstractBaseUser):
     Is_superadmin= models.BooleanField(default=False)
 
     USERNAME_FIELD ='email'
-    REQUIRED_FIELDS=['username','first_name','last_name','pin_code','phone_no']
+    REQUIRED_FIELDS=['username','first_name','last_name','phone_no']
 
     objects = UserManager()
 
