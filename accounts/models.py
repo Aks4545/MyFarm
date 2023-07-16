@@ -1,120 +1,89 @@
 from django.db import models
-
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
+from django.db.models.fields.related import ForeignKey, OneToOneField
 # Create your models here.
 
 
-
 class UserManager(BaseUserManager):
-
-     # Other fields specific to Moderator model
-
-    def create_user(self,first_name,last_name,username,email,password=None):
+    def create_user(self, first_name, last_name, username, email, password=None):
         if not email:
-            raise ValueError('user must have  email address')
+            raise ValueError('User must have an email address')
 
         if not username:
-            raise ValueError('user must have  an username')
-        
+            raise ValueError('User must have an username')
 
         user = self.model(
-            email= self.normalize_email(email),
-            username= username,
-            first_name=first_name,
-            last_name=last_name,
+            email = self.normalize_email(email),
+            username = username,
+            first_name = first_name,
+            last_name = last_name,
         )
-
         user.set_password(password)
         user.save(using=self._db)
         return user
-    
-    def create_superuser(self,first_name,last_name,username,email,password=None):
-        user = self.create_user (
-            email= self.normalize_email(email),
-            username= username,
-            first_name=first_name,
-            last_name=last_name,
-        )
 
-        user.is_admin= True
-        user.is_active=True
-        user.is_staff=True
-        user.is_superadmin=True
-        user.save(using =self._db)
+    def create_superuser(self, first_name, last_name, username, email, password=None):
+        user = self.create_user(
+            email = self.normalize_email(email),
+            username = username,
+            password = password,
+            first_name = first_name,
+            last_name = last_name,
+        )
+        user.is_admin = True
+        user.is_active = True
+        user.is_staff = True
+        user.is_superadmin = True
+        user.save(using=self._db)
         return user
 
 
-
-
-
 class User(AbstractBaseUser):
-    FARMER = 1
+    VENDOR = 1
     CUSTOMER = 2
 
     ROLE_CHOICE = (
-        (FARMER,'farmer'),
-        (CUSTOMER,'customer'),
+        (VENDOR, 'Vendor'),
+        (CUSTOMER, 'Customer'),
     )
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    username = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(max_length=100, unique=True)
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
 
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
-    phone_no =models.CharField(max_length=100)
-    username=  models.CharField(max_length=150)
-    pin_code= models.CharField(max_length=100)
-    email = models.EmailField(max_length=150,unique=True)
-    password = models.CharField(max_length=128)
-    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE,blank=True,null=True)
-    #required 
-
+    # required fields
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)
     created_date = models.DateTimeField(auto_now_add=True)
-    modification_date = models.DateTimeField(auto_now=True)
-    Is_admin= models.BooleanField(default=False)
-    Is_active= models.BooleanField(default=False)
-    Is_staff = models.BooleanField(default=False)
-    Is_superadmin= models.BooleanField(default=False)
+    modified_date = models.DateTimeField(auto_now=True)
+    is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+    is_superadmin = models.BooleanField(default=False)
 
-    USERNAME_FIELD ='email'
-    REQUIRED_FIELDS=['username','first_name','last_name']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     objects = UserManager()
 
-    def __str__(self): 
+    def __str__(self):
         return self.email
-    
-    def has_perm(self,perm,obj=None):
-        return self.Is_admin
-    
 
-    def has_module_perms(self,obj=None):
+    def has_perm(self, perm, obj=None):
+        return self.is_admin
+
+    def has_module_perms(self, app_label):
         return True
-
-# class Seller(AbstractBaseUser):
-#     first_name = models.CharField(max_length=150)
-#     last_name = models.CharField(max_length=150)
-#     email = models.EmailField()
-#     username =models.CharField(max_length=100,unique=True)
-#     password = models.CharField(max_length=128)
-#     phone_no =models.CharField(max_length=100,unique=True)
-#     location =models.CharField(max_length=150)
-#     user_image =models.ImageField(upload_to="workerProfile") 
-#     dob =models.DateField(null=True)
-#     user_bio=models.CharField(max_length=150)
-#     type=models.CharField(max_length=100,default='worker') 
-#     address=models.CharField(max_length=300)
     
-#     is_approved=models.BooleanField(null= True)
-#     status=models.BooleanField(null= True)
-#     report=models.BooleanField(null= True)
+class UserProfile(models.Model):
+    user = OneToOneField( User, on_delete=models.CASCADE, blank=True, null=True)
+    profile_photo = models.ImageField(upload_to='users/profile_picture',blank=True,null=True)
+    cover_photo = models.ImageField(upload_to='users/profile_picture',blank=True,null=True)
+    Phone_no = models.CharField(max_length=150,unique=True)
+    address_line_1 = models.CharField(max_length=150,blank=True,null=True)
+    address_line_2 = models.CharField(max_length=150,blank=True,null=True)
+    pin_code = models.CharField(max_length=150,unique=True)
+    
 
-#     def __str__(self):
-#         return self.username
 
-# class login(models.Model):
-#     username =models.CharField(max_length=100)
-#     password = models.CharField(max_length=128)
-#     type=models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return self.username
