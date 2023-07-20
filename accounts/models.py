@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser,BaseUserManager
 from django.db.models.fields.related import ForeignKey, OneToOneField
+
+
 # Create your models here.
 
 
@@ -50,6 +52,8 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
+    mobile_no = models.CharField(max_length=150)
+    pin_code = models.CharField(max_length=6)
     role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
 
     # required fields
@@ -63,7 +67,7 @@ class User(AbstractBaseUser):
     is_superadmin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name',]
 
     objects = UserManager()
 
@@ -77,13 +81,18 @@ class User(AbstractBaseUser):
         return True
     
 class UserProfile(models.Model):
-    user = OneToOneField( User, on_delete=models.CASCADE, blank=True, null=True)
+    user = OneToOneField( User, on_delete=models.CASCADE, blank=True)
     profile_photo = models.ImageField(upload_to='users/profile_picture',blank=True,null=True)
-    cover_photo = models.ImageField(upload_to='users/profile_picture',blank=True,null=True)
-    Phone_no = models.CharField(max_length=150,unique=True)
+    cover_photo = models.ImageField(upload_to='users/cover_picture',blank=True,null=True)
     address_line_1 = models.CharField(max_length=150,blank=True,null=True)
     address_line_2 = models.CharField(max_length=150,blank=True,null=True)
-    pin_code = models.CharField(max_length=150,unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
     
+    def __str__(self) :
+        return self.user.email
+    
+
+
 
 

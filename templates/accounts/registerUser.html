@@ -1,0 +1,99 @@
+
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+  <link rel="stylesheet" href="{% static  'assets/css/login.css' %}">
+   <script src="{% static 'assets/js/login.js' %}"></script>
+   
+
+
+    <div class="wrapper">
+        <div class="container mt-5">
+          <div class="col-left">
+            <div class="login-text">
+              <h2>Logo</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget eros dapibus, ultricies tellus vitae, consectetur tortor. Etiam rutrum placerat
+              </p>
+              <a class="btn" href="">Read More</a>
+            </div>
+          </div>
+          <div class="col-right">
+            <div class="login-form">
+              <h2>Login</h2>
+              <form action="{% url 'registerUser' %}"  method="post"   >
+                {% csrf_token %} 
+                <p>
+                  <label>First Name</label>
+                    {{form.first_name}}
+                </p>
+                <p>
+                  <label>Last Name</label>
+                  {{form.first_name}}
+                </p>
+                <p>
+                  <label>User Name</label>
+                  {{form.username}}           
+                </p>
+                <p>
+                  <label>Email</label>
+                  {{form.email}}               4
+                </p>
+                <p>
+                  <label>Phone Number</label>
+                  {{form.mobile_no}}                
+                </p>
+                <p>
+                  <label>Pin Code</label>
+                  {{form.pin_code}}                
+                </p>
+                <p>
+                  <label>Password</label>
+                  {{form.password}}                
+                </p>
+                <p>
+                  <label>confirm Password</label>
+                  {{form.confirm_password}}                
+                </p>
+                <p class="errorlist">
+                  {% for field in form %}
+
+                    {% if field.errors %}
+
+                      {% for errors in field.errors %}
+
+                        <li style="color: red;">{{ error }}</li>
+
+                      {% endfor %}
+
+                    {% endif %}
+
+                  {% endfor %}
+                  <li style="color: red;">{{ form.non_field_errors }}</li>
+
+                </p>
+
+
+                <p>
+                  <input class="btn" type="submit" value="Sing Up"  />
+                </p>
+                <p>
+                    {% include 'includes/alert.html' %}
+                </p>
+                <p>
+                  <a href="">Forget password?</a>
+                  <a href="login">already have  account.</a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+{% endblock %}

@@ -1,0 +1,54 @@
+  {% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+
+
+
+
+
+    <link rel="stylesheet" href="{% static  'assets/css/login.css' %}">
+   <script src="{% static 'assets/js/login.js' %}"></script>
+
+ 
+
+    <div class="wrapper ">
+        <div class="container mt-5">
+          <div class="col-left">
+            <div class="login-text">
+              <h2>Logo</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget eros dapibus, ultricies tellus vitae, consectetur tortor. Etiam rutrum placerat
+              </p>
+              <a class="btn" href="">Read More</a>
+            </div>
+          </div>
+          <div class="col-right">
+            <div class="login-form">
+              <h2>Login</h2>
+              <form>
+                <p>
+                  <input type="text" placeholder="Username" required>
+                </p>
+                <p>
+                  <input type="password" placeholder="Password" required>
+                </p>
+                <p>
+                  <input class="btn" type="submit" value="Sing In" />
+                </p>
+                <p>
+                  <a href="">Forget password?</a>
+                  <a href="register">Create an account.</a>
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+
+</html>
+
+{% endblock %}
