@@ -26,7 +26,7 @@
           <div class="col-right">
             <div class="login-form">
               <h2>Login</h2>
-              <form action="{% url 'registerUser' %}"  method="post"   >
+              <form action="{% url 'registerSeller' %}"  method="post" enctype="multipart/form-data"  >
                 {% csrf_token %} 
                 <p>
                   <label>First Name</label>
@@ -36,6 +36,11 @@
                   <label>Last Name</label>
                   {{form.first_name}}
                 </p>
+              
+                  <p>
+                    <label>Farm Name</label>
+                    {{s_form.seller_name}}
+                  </p>
                 <p>
                   <label>User Name</label>
                   {{form.username}}           
