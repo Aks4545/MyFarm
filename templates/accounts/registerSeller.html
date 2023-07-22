@@ -22,6 +22,12 @@
   <div class="container">
           <form action="{% url 'registerSeller' %}" method="post" enctype= multipart/form-data>
             {% csrf_token %}
+            <div class="row">
+              <div >
+                  {% include 'includes/alert.html' %}
+              </div>
+            </div>
+
               <div class="first">
                   <label for="first">first name:</label>
                   <div class="clear"></div>
@@ -82,11 +88,7 @@
               <div class="submit">
                   <input type="submit" value="sign up">
               </div>
-              <div class="row">
-                <div >
-                    {% include 'includes/alert.html' %}
-                </div>
-            </div>
+              
 
         </li> 
           </form>

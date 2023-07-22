@@ -1,17 +1,42 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+
+from .utils import detectUser
 from .forms import UserForm
 from seller.forms import sellerform
 from .models import User,UserProfile
-from django.contrib import messages
-
+from django.contrib import messages, auth
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.contrib.auth.decorators import login_required,user_passes_test
+from django.core.exceptions import PermissionDenied
 
-# Create your views here.
+
+
+# restrict the vendor from accessing the customerpage
+
+def check_role_vendor(user):
+    if user.role == 1:
+        return True
+    else:
+        raise PermissionDenied
+    
+
+
+    # restrict the vendor from accessing the customerpage
+
+def check_role_customer(user):
+    if user.role == 2:
+        return True
+    else:
+        raise PermissionDenied
+
 
 def registerUser(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request,'you are already logged in')
+        return redirect('/')
+    elif request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
             password = form.cleaned_data['password']
@@ -37,7 +62,11 @@ def registerUser(request):
 
 
 def registerSeller(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request,'you are already logged in')
+        return redirect('/')
+    
+    elif request.method == 'POST':
         form=UserForm(request.POST)
         s_form =sellerform(request.POST)
         if form.is_valid() and s_form.is_valid():
@@ -64,6 +93,57 @@ def registerSeller(request):
         's_form':s_form,
     }
     return render(request,'accounts/registerSeller.html',context)
+
+
+
+def login(request):
+    if request.user.is_authenticated:
+        messages.warning(request,'you are already logged in')
+        return redirect('/')
+
+    elif request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = auth.authenticate(email=email,password=password)
+
+        if user is not None:
+            auth.login(request,user)
+            messages.success(request,'you are successfully logged in')
+            return redirect('MyAccount')
+        else:
+            messages.error(request,'invalid login credentials')
+            return redirect('login')
+    return render(request,'accounts/login.html')
+
+def logout(request):
+    auth.logout(request)
+    messages.info(request, 'You are logged out.')
+    return redirect('login')
+
+
+@login_required(login_url = 'login')
+def MyAccount(request):
+    user = request.user
+    redirectUrl = detectUser(user)
+    return redirect(redirectUrl)
+
+
+
+@login_required(login_url = 'login')
+@user_passes_test(check_role_vendor)
+def vendorDashboard(request):
+    return render(request,'accounts/vendorDashboard.html')
+
+
+
+
+@login_required(login_url = 'login')
+@user_passes_test(check_role_customer)
+def custDashboard(request):
+    return render(request,'accounts/custDashboard.html')
+
+
 
 
 

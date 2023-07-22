@@ -26,10 +26,8 @@
 									</ul>
 								</li>
 								<li><a href="/contact">Contact</a></li>
-								<li><a href="{% url 'registerUser' %}">Register</a></li>
-                                    <li><a href="/login">Login</a></li>
+								
 
-                                    <li><a href="login">Want to be seller..??</a></li>
                                     
                                     <li><a >sell Products</a>
                                         <ul class="sub-menu">
@@ -43,17 +41,18 @@
                                     </li>
 
 
-                                    <li><a href="">Account</a>
-									<ul class="sub-menu">
-										<li>
-                                            <div class="header-icons">
-                                             <a class="" href="cart.html"> <i class="bi bi-person-fill">My Profile</i></a>
-                                             </div>
-                                        </li>
-										<li><a href="single-news.html">Orders</a></li>
-									</ul>
-                                    <li> <button type="button" class="btn btn-success btn-sm"><a href="{% url 'registerSeller' %}">Seller Registration</a></button></li>
+    
 
+                                    {% if user.is_authenticated %}
+                                    <li><a href="{% url 'MyAccount'  %}">My Account</a></li>
+
+                                    <li><a href="{% url 'logout'  %}">logout</a></li>
+
+                                    {% else %}
+                                    <li><a href="{% url 'registerUser' %}">Register</a></li>
+                                    <li><a href="{% url 'login'  %}">login</a></li>
+                                    <li> <button type="button" class="btn btn-success btn-sm"  onclick="window.location.href='{% url 'registerSeller' %}'">Seller Registration</a></button></li>
+                                    {% endif %}
 
 								<li>
                     

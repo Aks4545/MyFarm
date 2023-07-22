@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+
+{% block content %}
+<div style="margin-top: 10%; background-color: yellowgreen;" >
+<h1>welcome{{user.username}}</h1>
+
+<h5>you are {{ user.role_get }}</h5>
+</div>
+{% endblock %}
