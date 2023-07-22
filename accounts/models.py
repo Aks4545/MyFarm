@@ -42,8 +42,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     VENDOR = 1
-    CUSTOMER = 2
-
+    CUSTOMER = 2 
     ROLE_CHOICE = (
         (VENDOR, 'Vendor'),
         (CUSTOMER, 'Customer'),
@@ -52,10 +51,9 @@ class User(AbstractBaseUser):
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=100, unique=True)
-    mobile_no = models.CharField(max_length=150)
-    pin_code = models.CharField(max_length=6)
-    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE, blank=True, null=True)
-
+    mobile_no = models.CharField(max_length=150,blank=True,null=True)
+    pin_code = models.CharField(max_length=6,blank=True,null=True)
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICE,blank=True, null=True )
     # required fields
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now_add=True)

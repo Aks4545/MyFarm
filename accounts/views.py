@@ -48,7 +48,7 @@ def registerSeller(request):
             user.save()
             seller= s_form.save(commit=False)
             seller.user= user
-            user_profile = user.objects.get(user=user)
+            user_profile = UserProfile.objects.get(user=user)
             seller.user_profile = user_profile
             seller.save()
             messages.success(request,'the account has been registered successfully... please wait for the appproval')
