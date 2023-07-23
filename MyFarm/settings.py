@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'social_django',
+
     'category',
     'accounts',
     'seller',
@@ -48,10 +49,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -70,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.context_processors.get_vendor',
             ],
         },
     },
@@ -142,9 +145,17 @@ MEDIA_ROOT =BASE_DIR /'media'
 
 
 
-
-
 from django.contrib.messages import constants as messages
 MESSAGES_TAGS ={
     messages.ERROR:'danger',
 }
+
+
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST= 'smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='akhillkrishnakrishnas@gmail.com'
+EMAIL_HOST_PASSWORD='thlxqucpdcykyojt'
+EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = 'MyFarm Marketplace <akhilkrishnakrishnas@gmail.com>'

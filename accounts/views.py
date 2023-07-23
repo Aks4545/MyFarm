@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from .utils import detectUser
+from .utils import detectUser,send_verification_email
 from .forms import UserForm
 from seller.forms import sellerform
 from .models import User,UserProfile
@@ -44,6 +44,10 @@ def registerUser(request):
             user.set_password(password)
             user.role = User.CUSTOMER
             form.save()
+#send verification email
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verification_email.html'
+            send_verification_email(request, user, mail_subject, email_template)
             messages.success(request,'the account has been registered successfully')
             return redirect('registerUser')
         
@@ -80,6 +84,13 @@ def registerSeller(request):
             user_profile = UserProfile.objects.get(user=user)
             seller.user_profile = user_profile
             seller.save()
+
+            #send verification email
+
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verification_email.html'
+            send_verification_email(request, user, mail_subject, email_template)
+
             messages.success(request,'the account has been registered successfully... please wait for the appproval')
             return redirect('registerSeller')
         else:
@@ -93,6 +104,11 @@ def registerSeller(request):
         's_form':s_form,
     }
     return render(request,'accounts/registerSeller.html',context)
+
+
+# def activate(request,uidb64,token):
+
+#     return
 
 
 
@@ -133,6 +149,7 @@ def MyAccount(request):
 @login_required(login_url = 'login')
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request):
+   
     return render(request,'accounts/vendorDashboard.html')
 
 

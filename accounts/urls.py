@@ -1,8 +1,10 @@
-from django.urls import path
+from django.urls import path,include
 from . import views
 
 
 urlpatterns = [
+
+    path('',views.MyAccount),
     path('registerUser/',views.registerUser,name='registerUser'),
     path('registerSeller/',views.registerSeller,name='registerSeller'),
     path('login/',views.login,name='login'),
@@ -10,5 +12,12 @@ urlpatterns = [
     path('MyAccount/',views.MyAccount,name='MyAccount'),
     path('custDashboard/',views.custDashboard,name='custDashboard'),
     path('vendorDashboard/',views.vendorDashboard,name='vendorDashboard'),
+
+    # path('activate/<uidb64>/<token>',views.activate,name='activate'),
+    
+    
+    
+    
+    path('vendor/',include('seller.urls'))
 
 ]
