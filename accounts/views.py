@@ -10,7 +10,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.core.exceptions import PermissionDenied
-
+from seller.models import seller
 
 
 # restrict the vendor from accessing the customerpage
@@ -149,7 +149,7 @@ def MyAccount(request):
 @login_required(login_url = 'login')
 @user_passes_test(check_role_vendor)
 def vendorDashboard(request):
-   
+    vendor = seller.objects.get(user=request.user)
     return render(request,'accounts/vendorDashboard.html')
 
 
