@@ -19,29 +19,12 @@
 							<ul>
 								<li class="current-list-item"><a href="{% url 'home' %}">Home</a></li>
 								<li><a href="/about">About</a></li>
-								<li><a href="news.html">News</a>
-									<ul class="sub-menu">
-										<li><a href="news.html">News</a></li>
-										<li><a href="single-news.html">Single News</a></li>
-									</ul>
-								</li>
+							
 								<li><a href="/contact">Contact</a></li>
 								
+								<li><a href="{% url 'marketplace' %}" >Market Place</a></li>
 
-                                    
-                                    <li><a >sell Products</a>
-                                        <ul class="sub-menu">
-                                            <li>
-                                                <div class="">
-                                                 <a class="" href=""> <i class="">Fruits</i></a>
-                                                 </div>
-                                            </li>
-                                            <li><a href="">Vegitables</a></li>
-                                        </ul>
-                                    </li>
-
-
-    
+                                
 
                                     {% if user.is_authenticated %}
                                     <li><a href="{% url 'MyAccount'  %}">My Account</a></li>
@@ -57,7 +40,11 @@
 								<li>
                     
 									<div class="header-icons">
-										<a class="shopping-cart" href="cart.html"><i class="fas fa-shopping-cart"></i></a>
+                                        {% if user.is_authenticated %}
+                                            <a class="shopping-cart" href=""><i class="fas fa-shopping-cart"></i></a>
+
+                                            <span class="badge badge-warning" id="cart_counter" style="border-radius: 50px; position: relative; bottom:10px; left: -5px;">0</span>
+                                        {% endif %}
 										<a class="mobile-hide search-bar-icon" href="#"><i class="fas fa-search"></i></a>
 									</div>
 								</li>

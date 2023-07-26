@@ -11,6 +11,7 @@ from django.dispatch import receiver
 from django.contrib.auth.decorators import login_required,user_passes_test
 from django.core.exceptions import PermissionDenied
 from seller.models import seller
+from django.template.defaultfilters import slugify
 
 
 # restrict the vendor from accessing the customerpage
@@ -45,9 +46,9 @@ def registerUser(request):
             user.role = User.CUSTOMER
             form.save()
 #send verification email
-            mail_subject = 'Please activate your account'
-            email_template = 'accounts/emails/account_verification_email.html'
-            send_verification_email(request, user, mail_subject, email_template)
+            # mail_subject = 'Please activate your account'
+            # email_template = 'accounts/emails/account_verification_email.html'
+            # send_verification_email(request, user, mail_subject, email_template)
             messages.success(request,'the account has been registered successfully')
             return redirect('registerUser')
         
@@ -81,15 +82,18 @@ def registerSeller(request):
             user.save()
             seller= s_form.save(commit=False)
             seller.user= user
+            seller_name = s_form.cleaned_data['seller_name']
+            seller.seller_slug = slugify(seller_name)+ '-' + str(user.id)
             user_profile = UserProfile.objects.get(user=user)
             seller.user_profile = user_profile
             seller.save()
 
+
             #send verification email
 
-            mail_subject = 'Please activate your account'
-            email_template = 'accounts/emails/account_verification_email.html'
-            send_verification_email(request, user, mail_subject, email_template)
+            # mail_subject = 'Please activate your account'
+            # email_template = 'accounts/emails/account_verification_email.html'
+            # send_verification_email(request, user, mail_subject, email_template)
 
             messages.success(request,'the account has been registered successfully... please wait for the appproval')
             return redirect('registerSeller')

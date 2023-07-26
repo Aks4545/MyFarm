@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'accounts',
     'seller',
     'items',
-
+    'marketplace',
 
 ]
 

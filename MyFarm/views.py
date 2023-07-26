@@ -1,9 +1,17 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from seller.models import seller
+
 
 def home(request):
-    return render(request,"home.html")
+    vendors = seller.objects.filter(is_approved=True, user__is_active=True)[:6]
+    context={
+        'vendors':vendors
+
+    }
+    
+    return render(request,"home.html",context)
 
 
 # def login(request):

@@ -15,4 +15,10 @@ urlpatterns = [
     path('product_add/category/edit/<int:pk>/', views.edit_category, name='edit_category'),
     path('product_add/category/delete/<int:pk>/', views.delete_category, name='delete_category'),
 
+    # product crud
+
+    path('product_add/product/add/', views.add_product, name='add_product'),
+    path('product_add/product/edit/<int:pk>/', views.edit_product, name='edit_product'),
+    path('product_add/product/delete/<int:pk>/', views.delete_product, name='delete_product'),
+
 ]

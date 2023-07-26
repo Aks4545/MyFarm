@@ -23,6 +23,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
     path('accounts/',include('accounts.urls')),
+    path('marketplace/',include('marketplace.urls')),
+
+
+
+
+
     # path('login',views.login,name='login'),
     # path('register',views.register,name='register'),
 
