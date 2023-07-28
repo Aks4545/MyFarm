@@ -43,10 +43,10 @@ def seller_detail(request,seller_slug):
 def add_to_cart(request, product_id):
     if request.user.is_authenticated:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-            # Check if the food item exists
+            # Check if the  item exists
             try:
-                prod = product.objects.get(id=product_id)
-                # Check if the user has already added that food to the cart
+                prod = product.objects.get(product_id)
+                # Check if the user has already added that item to the cart
                 try:
                     chkCart = Cart.objects.get(user=request.user, prod=prod)
                     # Increase the cart quantity

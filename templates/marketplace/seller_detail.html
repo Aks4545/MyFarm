@@ -99,36 +99,39 @@
 													{% for category in categories %}
 													<div class="element-title" id="menu-category-2">
 														<h5 class="text-color">{{ category }}</h5>
-														<span>{{category.description}}</span>
+														<span>{{ category.description }}</span>
 													</div>
 													<ul>
 														{% for prod in category.product.all %}
 														<li>
-															<div class="image-holder"><img src="{{prod.image.url}}" alt=""></div>
+															<div class="image-holder"> <img src="{{ prod.image.url }}" alt=""></div>
 															<div class="text-holder">
 																<h6>{{ prod }}</h6>
-																<span>{{prod.description}}</span>
+																<span>{{ prod.description }}</span>
 															</div>
 															<div class="price-holder">
-																<span class="price">{{prod.price}}</span>
-																<a href=""  style="margin-right: 28px;"><i class="fas fa-minus-circle  btn-success"></i></a>
-																<label  id=" qty-{{prod.id}}">0</label>
-																<a href="" class="add_to_cart" data-id="{{ prod.id }}" data-url="{% url 'add_to_cart' prod.id %}"><i class="fas fa-plus-circle  btn-success"></i></a>
-																<span id="add-menu-loader-10"></span>
+																<span class="price">${{ prod.price }}</span>
+			
+																<a href="#"  style="margin-right: 28px;"><i class="fas fa-minus-circle btn-success"></i></a>
+																<label id="qty-{{prod.id}}">0</label>
+																<a href="#" class="add_to_cart" data-id="{{ prod.id }}" data-url="{% url 'add_to_cart' prod.id %}"><i class="fas fa-plus-circle btn-success"></i></a>
+																
 															</div>
 														</li>
 														{% endfor %}
+														
 													</ul>
 													{% endfor %}
 													
 												</div>
+			
 												{% for item in cart_items %}
-
-                                    			<span id="qty-{{item.prod.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
-
-                                    
-
-                                    			{% endfor %}
+			
+												<span id="qty-{{item.prod.id}}" class="item_qty d-none" data-qty="{{ item.quantity }}">{{ item.quantity }}</span>
+			
+												
+			
+												{% endfor %}
 											</div>
 										</div>
 										
@@ -141,5 +144,5 @@
 				</div>
 			</div>
 			<!-- Main Section End -->
-
-{% endblock %}
+			
+			{% endblock %}
