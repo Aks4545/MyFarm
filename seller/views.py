@@ -1,11 +1,13 @@
 from django.contrib import messages
+from django.db import IntegrityError
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render,redirect
 from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
 from items.forms import CategoryForm, ProductForm
 from items.models import  product,category
-from .forms import sellerform
-from .models import seller
+from .forms import OpeningHourForm, sellerform
+from .models import OpeningHour, seller
 from django.contrib.auth.decorators import login_required,user_passes_test
 from accounts.views import check_role_vendor
 from django.template.defaultfilters import slugify
@@ -201,3 +203,36 @@ def delete_product(request, pk=None):
 
 
 
+def opening_hours(request):
+    opening_hours = OpeningHour.objects.filter(vendor=get_vendor(request))
+    form = OpeningHourForm()
+    context = {
+        'form': form,
+        'opening_hours': opening_hours,
+    }
+    return render(request, 'vendor/opening_hours.html', context)
+
+
+def add_opening_hours(request):
+    # handle the data and save them inside the database
+    if request.user.is_authenticated:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST':
+            day = request.POST.get('day')
+            from_hour = request.POST.get('from_hour')
+            to_hour = request.POST.get('to_hour')
+            is_closed = request.POST.get('is_closed')
+            
+            try:
+                hour = OpeningHour.objects.create(vendor=get_vendor(request), day=day, from_hour=from_hour, to_hour=to_hour, is_closed=is_closed)
+                if hour:
+                    day = OpeningHour.objects.get(id=hour.id)
+                    if day.is_closed:
+                        response = {'status': 'success', 'id': hour.id, 'day': day.get_day_display(), 'is_closed': 'Closed'}
+                    else:
+                        response = {'status': 'success', 'id': hour.id, 'day': day.get_day_display(), 'from_hour': hour.from_hour, 'to_hour': hour.to_hour}
+                return JsonResponse(response)
+            except IntegrityError as e:
+                response = {'status': 'failed', 'message': from_hour+'-'+to_hour+' already exists for this day!'}
+                return JsonResponse(response)
+        else:
+            HttpResponse('Invalid request')

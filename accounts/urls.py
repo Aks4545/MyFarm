@@ -18,6 +18,7 @@ urlpatterns = [
     
     
     
-    path('vendor/',include('seller.urls'))
+    path('vendor/',include('seller.urls')),
+    path('customers/',include('customers.urls')),
 
 ]

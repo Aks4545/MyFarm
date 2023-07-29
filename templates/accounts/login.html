@@ -6,7 +6,6 @@
 {% block content %}
 
 
-<html lang="en">
 
 
     <body style="background-color: rgb(27, 148, 54);">
@@ -42,41 +41,6 @@
         </div>
     </body>
 
-<!-- 
-<link rel="stylesheet" href="{% static 'assets/css/login.css' %}">
-
-<div class="container " style="padding-top: 10%; padding-bottom: 8%;">
-
-  <div class='col-md-9 card mx-auto d-flex flex-row px-0'>
-    
-  <div class="img-left d-md-flex d-none"></div>
-  
-    <div class="card-body d-flex flex-column justify-content-center">
-      <h4 class="title text-center mt-4 pb-3">Login into accont</h4>
-  <form class='col-sm-10 col-12 mx-auto' action="{% url 'login' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {%if messages %}
-    <div class="alert alert-primary" role="alert">
-    {%for message in messages %}
-    {{message}}
-    {%endfor%}
-    </div> 
-    {%endif%}
-        <div class='form-group '>
-          <input type="email" name="email" class="form-control " placeholder='enter your email address'>
-        </div>
-         <div class='form-group py-3 ' >
-          <input type="password" name="password" class="form-control" placeholder='enter your password'>
-        </div>
-         <div class=''>
-          <input type="button" class="btn  btn-outline-primary d-block w-100 " value='Submit'>
-        </div>
- </form>
-      </div>
-
-  </div> -->
-  
-  
 </div>
 
 {% endblock %}

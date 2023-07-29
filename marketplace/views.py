@@ -40,12 +40,13 @@ def seller_detail(request,seller_slug):
 
 
 
-def add_to_cart(request, product_id):
+def add_to_cart(request, id):
     if request.user.is_authenticated:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
             # Check if the  item exists
             try:
-                prod = product.objects.get(product_id)
+                prod = product.objects.get(id=id)
+                print(id)
                 # Check if the user has already added that item to the cart
                 try:
                     chkCart = Cart.objects.get(user=request.user, prod=prod)
@@ -65,7 +66,16 @@ def add_to_cart(request, product_id):
         return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
 
 
+#cartview
 
+
+
+
+
+#seaech viw
+
+def search(request):
+    return HttpResponse('search')
 
 
 

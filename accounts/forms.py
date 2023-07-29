@@ -32,3 +32,11 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['profile_photo', 'cover_photo', 'address','mobile_no','pin_code','state','city']
+
+
+
+
+class UserInfoForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'mobile_no']
