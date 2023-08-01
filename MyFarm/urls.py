@@ -29,11 +29,13 @@ urlpatterns = [
 
 
     #search (marketplaxe)
-
-    path('search/',MarketplaceViews.search,name='search')
-
+    path('cart/',MarketplaceViews.cart,name='cart'),
 
 
+    path('search/',MarketplaceViews.search,name='search'),
+
+
+    path('checkout/', MarketplaceViews.checkout, name='checkout'),
 
     # path('login',views.login,name='login'),
     # path('register',views.register,name='register'),

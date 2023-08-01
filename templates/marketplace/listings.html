@@ -62,6 +62,11 @@
                                                         <img src="{% static 'assets/img/bg-1.jpg' %}" class="img-list wp-post-image" alt="">
                                                         {% endif %}                                                    </a>
                                                 </figure>
+                                                {% if vendor.is_open %}
+                                                <span class="restaurant-status open"><em class="bookmarkRibbon"></em>Open</span>
+                                                {% else %}
+                                                <span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
+                                                {% endif %}
                                                                                          
                                               </div>
                                             <div class="text-holder">
@@ -73,7 +78,7 @@
                                                 </div>
                                                 <div class="post-title">
                                                     <h5>
-                                                        <a href="{% url 'seller_detail'  vendor.seller_slug %}">{{vendor.seller_name}}</a>
+                                                        <a href="{% url 'seller_detail'  vendor.seller_slug %}" class="" >{{vendor.seller_name}}</a>
                                                     </h5>
                                                 </div>
                                                 <span class="post-categories"><span> 
@@ -95,7 +100,7 @@
                                 
                             </div>
                             <div class="section-sidebar col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                                <div class="message-box" style="background-color: #fa9918;">
+                                <div class="message-box" style="background-color: #38b450;">
                                     <strong>I'm not Listed!</strong><span>is your restaurant or
                                         business not
                                         listed on over site</span>

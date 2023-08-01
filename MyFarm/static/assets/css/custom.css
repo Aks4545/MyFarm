@@ -51,7 +51,7 @@ table > tbody > tr > td{
 
 /* Checked style */
 .payment-method [type=radio]:checked + img{
-    outline: 2px solid #ff0000;
+    outline: 2px solid #27a632;
 }
 
 @media only screen and (max-width: 480px) {
@@ -85,3 +85,36 @@ table > tbody > tr > td{
 table td, table th{
     line-height: 1rem !important;
 }
+
+
+
+/* Style for the open badge */
+.badge.open-badge {
+    position: relative;
+  }
+  
+  .badge.open-badge:after {
+    content: "Open";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: green;
+    color: white;
+    padding: 5px;
+  }
+  
+  /* Style for the close badge */
+  .badge.close-badge {
+    position: relative;
+  }
+  
+  .badge.close-badge:after {
+    content: "Close";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    padding: 5px;
+  }
+  

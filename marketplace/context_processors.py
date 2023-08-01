@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from .models import Cart,Tax
 from items.models import product
 
@@ -25,7 +26,7 @@ def get_cart_amounts(request):
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(user=request.user)
         for item in cart_items:
-            prod = product.objects.get(pk=item.prod.id) # type: ignore
+            prod = get_object_or_404(product,pk=item.product.id)
             subtotal += (prod.price * item.quantity) # subtotal = subtotal + (fooditem.price * item.quantity)
 
         get_tax = Tax.objects.filter(is_active=True)

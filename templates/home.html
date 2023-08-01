@@ -8,6 +8,7 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
 
 
 
@@ -25,7 +26,7 @@
 							<h1>Vegitables</h1>
 
 							<div class="hero-btns">
-								<a href="" class="boxed-btn"> Buy Now</a>
+								<a href="{% url 'marketplace' %}" class="boxed-btn"> Buy Now</a>
 								<a href="" class="bordered-btn">Contact Us</a>
 							</div>
 						</div>
@@ -44,7 +45,7 @@
 							<p class="subtitle">Fresh Everyday</p>
 							<h1>100% Organic Collection</h1>
 							<div class="hero-btns">
-								<a href="shop.html" class="boxed-btn">Visit Shop</a>
+								<a href="{% url 'marketplace' %}" class="boxed-btn">Visit Shop</a>
 								<a href="contact.html" class="bordered-btn">Contact Us</a>
 							</div>
 						</div>
@@ -53,27 +54,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- single home slider -->
-	<div class="single-homepage-slider homepage-bg-3">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-10 offset-lg-1 text-right">
-					<div class="hero-text">
-						<div class="hero-text-tablecell">
-							<p class="subtitle">Mega Sale Going On!</p>
-							<h1>Get December Discount</h1>
-							<div class="hero-btns">
-								<a href="shop.html" class="boxed-btn">Visit Shop</a>
-								<a href="contact.html" class="bordered-btn">Contact Us</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- end home page slider -->
+
 
 <!-- features list section -->
 <div class="list-section pt-80 pb-80">
@@ -136,11 +117,25 @@
 			<div class="col-lg-4 col-md-6 text-center">
 				<div class="single-product-item">
 					<div class="product-image">
+						<figure>
 						{% if vendor.user_profile.profile_photo %}
 						<a href=""><img src="{{ vendor.user_profile.profile_photo.url }}" height="125" class="attachment-full size-full wp-post-image" alt=""></a>
+						<div class="profile-photo-placeholder">
+							<span class="close-badge">CLOSED</span>
+							<span class="open-badge">OPEN</span>
+							<!-- Add any additional design elements or text you want for the placeholder -->
+						</div>
 						{% else %}
 						<a href=""><img src="{% static 'images/default-profile.png' %}" height="125" class="attachment-full size-full wp-post-image" alt=""></a>
-						{% endif %}					</div>
+						{% endif %}	
+					</figure>			
+						<!-- {% if vendor.is_open %}
+						<span class="restaurant-status open"><em class="bookmarkRibbon"></em>Open</span>
+						{% else %}
+						<span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
+						{% endif %}	 -->
+					</div>
+					
 					<h3>{{vendor.seller_name}}</h3>
 					{% if vendor.user_profile.city and vendor.user_profile.state and vendor.user_profile.pin_code %}
 					<span><i>{{vendor.user_profile.city}},{{vendor.user_profile.state}},{{vendor.user_profile.pin_code}}</i></span><br>

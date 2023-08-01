@@ -145,13 +145,13 @@ def add_product(request):
     if request.method == 'POST':
         form = ProductForm(request.POST, request.FILES)
         if form.is_valid():
-            foodtitle = form.cleaned_data['product_title']
-            food = form.save(commit=False)
-            food.vendor = get_vendor(request)
-            food.slug = slugify(foodtitle)
+            product_title = form.cleaned_data['product_title']
+            prod = form.save(commit=False)
+            prod.vendor = get_vendor(request)
+            prod.slug = slugify(product_title)
             form.save()
             messages.success(request, 'Product added successfully!')
-            return redirect('product_by_category', food.category.id)
+            return redirect('product_by_category', prod.category.id)
         else:
             print(form.errors)
     else:
@@ -236,3 +236,12 @@ def add_opening_hours(request):
                 return JsonResponse(response)
         else:
             HttpResponse('Invalid request')
+
+
+def remove_opening_hours(request, pk=None):
+    if request.user.is_authenticated:
+        if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            hour = get_object_or_404(OpeningHour, pk=pk)
+            hour.delete()
+            return JsonResponse({'status': 'success', 'id': pk})
+ 
