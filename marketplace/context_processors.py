@@ -7,7 +7,7 @@ def get_cart_counter(request):
     cart_count = 0
     if request.user.is_authenticated:
         try:
-            cart_items = Cart.objects.filter(user=request.user)
+            cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
             if cart_items:
                 for cart_item in cart_items:
                     cart_count += cart_item.quantity
@@ -27,7 +27,7 @@ def get_cart_amounts(request):
         cart_items = Cart.objects.filter(user=request.user)
         for item in cart_items:
             prod = get_object_or_404(product,pk=item.product.id)
-            subtotal += (prod.price * item.quantity) # subtotal = subtotal + (fooditem.price * item.quantity)
+            subtotal += (prod.price * item.quantity) # subtotal = subtotal + (product.price * item.quantity)
 
         get_tax = Tax.objects.filter(is_active=True)
         for i in get_tax:
