@@ -6,7 +6,7 @@ from items.models import product
 class Payment(models.Model):
     PAYMENT_METHOD = (
         ('PayPal', 'PayPal'),
-        ('RazorPay', 'RazorPay'), # Only for Indian Students.
+        ('RazorPay', 'RazorPay'), 
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     transaction_id = models.CharField(max_length=100)
@@ -61,7 +61,7 @@ class Orderedproduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     payment = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    item = models.ForeignKey(product, on_delete=models.CASCADE)
+    products = models.ForeignKey(product, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     price = models.FloatField()
     amount = models.FloatField()
@@ -69,4 +69,4 @@ class Orderedproduct(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.item.product_title
+        return self.products.product_title

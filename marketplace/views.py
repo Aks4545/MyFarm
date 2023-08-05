@@ -1,13 +1,14 @@
 from datetime import date
 from django.http import HttpResponse,JsonResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from items.models import category,product
 from marketplace.models import Cart,Tax
-from .context_processors import get_cart_counter
+from orders.forms import orderForm
+from .context_processors import get_cart_amounts, get_cart_counter
 from seller.models import seller,OpeningHour
 from django.db.models import Prefetch
 from django.contrib.auth.decorators import login_required
-from accounts.models import User
+from accounts.models import User, UserProfile
 # Create your views here.
 
 
@@ -71,12 +72,12 @@ def add_to_cart(request, product_id):
                     chkCart.quantity += 1
                     print('cart quantity increased')
                     chkCart.save()
-                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity})
+                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity','qty': chkCart.quantity, 'cart_counter': get_cart_counter(request), 'cart_amount': get_cart_amounts(request)})
                 except:
                     print('creating new cart')
                     chkCart, created = Cart.objects.get_or_create(user=request.user, product=prod, quantity = 1)
                     print('cart created')
-                    return JsonResponse({'status': 'Success', 'message': 'Added the product to the cart', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity})
+                    return JsonResponse({'status': 'Success', 'message': 'Added the product to the cart', 'qty': chkCart.quantity, 'cart_counter': get_cart_counter(request), 'cart_amount': get_cart_amounts(request)})
             except:
                 print('This product does not exist!!!')
                 return JsonResponse({'status': 'Failed', 'message': 'This product does not exist!'})
@@ -106,7 +107,7 @@ def decrease_cart(request, product_id):
                     else:
                         chkCart.delete()
                         chkCart.quantity = 0
-                    return JsonResponse({'status': 'Success', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity})
+                    return JsonResponse({'status': 'Success',  'qty': chkCart.quantity, 'cart_counter': get_cart_counter(request), 'cart_amount': get_cart_amounts(request)})
                 except:
                     return JsonResponse({'status': 'Failed', 'message': 'You do not have this item in your cart!'})
             except:
@@ -123,7 +124,7 @@ def decrease_cart(request, product_id):
 
 @login_required(login_url = 'login')
 def cart(request):
-    cart_items = Cart.objects.filter(user=request.user)
+    cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
     context = {
         'cart_items': cart_items,
     }
@@ -140,7 +141,7 @@ def delete_cart(request, cart_id):
                 cart_item = get_object_or_404(Cart,user=request.user, id=cart_id)
                 if cart_item:
                     cart_item.delete()
-                    return JsonResponse({'status': 'Success', 'message': 'Cart item has been deleted!', 'cart_counter': get_cart_counter(request)})
+                    return JsonResponse({'status': 'Success', 'message': 'Cart item has been deleted!',  'cart_counter': get_cart_counter(request), 'cart_amount': get_cart_amounts(request)})
             except:
                 return JsonResponse({'status': 'Failed', 'message': 'Cart Item does not exist!'})
         else:
@@ -160,7 +161,27 @@ def search(request):
 
 @login_required(login_url='login')
 def checkout(request):
-
-    return render(request, 'marketplace/checkout.html')
+    cart_items = Cart.objects.filter(user=request.user).order_by('created_at')
+    cart_count= cart_items.count()
+    if cart_count <= 0:
+        return redirect('marketplace')
+    user_profile = get_object_or_404(UserProfile,user=request.user)
+    default_values = {
+        'first_name': request.user.first_name,
+        'last_name': request.user.last_name,
+        'phone': request.user.mobile_no,
+        'email': request.user.email,
+        'address': user_profile.address,
+        # 'country': user_profile.country,
+        'state': user_profile.state,
+        'city': user_profile.city,
+        'pin_code': user_profile.pin_code,
+    }
+    form = orderForm(initial=default_values)
+    context= {
+        'form':form,
+        'cart_items':cart_items
+    }
+    return render(request, 'marketplace/checkout.html',context)
 
 

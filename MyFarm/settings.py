@@ -81,6 +81,8 @@ TEMPLATES = [
                 'marketplace.context_processors.get_cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
                 'accounts.context_processors.get_user_profile',
+                'accounts.context_processors.get_paypal_client_id',
+                
 
             ],
         },
@@ -164,7 +166,14 @@ MESSAGES_TAGS ={
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_PORT=587
-EMAIL_HOST_USER='akhillkrishnakrishnas@gmail.com'
-EMAIL_HOST_PASSWORD='thlxqucpdcykyojt'
+EMAIL_HOST_USER='akhilkrishnakrishnas@gmail.com'
+EMAIL_HOST_PASSWORD='fthfzsbanuhpoaay'
+EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
-# DEFAULT_FROM_EMAIL = 'MyFarm Marketplace <akhilkrishnakrishnas@gmail.com>'
+DEFAULT_FROM_EMAIL = 'MyFarm Marketplace <akhilkrishnakrishnas@gmail.com>'
+
+
+
+PAYPAL_CLIENT_ID = 'ASH4m9bqbX3Jex0yvTbdWsnBAiRE6jwMN65EN15eSGqbs47gAfqX27AfS-i8grq3G3Ebj0OpxRclGcSw'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'

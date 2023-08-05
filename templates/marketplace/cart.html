@@ -59,13 +59,13 @@
                                                     <div class="text-holder">
                                                         <h6>{{ item.product }}</h6>
                                                         <span>{{ item.product.description }}</span>
-                                                    </div>
+                                                        <a href="{% url 'seller_detail' item.product.vendor.seller_slug %}" class="badge badge-success">{{ item.product.vendor }}</a>                                                    </div>
                                                     <div class="price-holder">
                                                         <span class="price">${{ item.product.price }}</span>
 
-                                                        <a href="#" class="decrease_cart" data-id="{{ item.product.id }}" data-url="{% url 'decrease_cart' item.product.id %}" style="margin-right: 28px;"><i class="fas fa-minus-circle btn-success"></i></a>
+                                                        <a href="#" class="decrease_cart" data-id="{{ item.product.id }}" data-url="{% url 'decrease_cart' item.product.id %}" style="margin-right: 28px;" id="item.id"><i class="fas fa-minus-circle btn-success"></i></a>
 														<label id="qty-{{item.product.id}}">0</label>
-														<a href="#" class="add_to_cart" data-id="{{ item.product.id }}" data-url="{% url 'add_to_cart' item.product.id %}"><i class="fas fa-plus-circle btn-success"></i></a>
+														<a href="#" class="add_to_cart" data-id="{{ item.product.id }}" data-url="{% url 'add_to_cart' item.product.id %}" ><i class="fas fa-plus-circle btn-success"></i></a>
 																
                                                         <a href="#" class="delete_cart" data-id="{{ item.id }}" data-url="{% url 'delete_cart' item.id %}"><i class="fas fa-trash btn-danger"></i></a>
                                                         

@@ -1,6 +1,8 @@
+from base64 import urlsafe_b64decode
+from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-
+from django.urls import reverse
 from .utils import detectUser,send_verification_email
 from .forms import UserForm
 from seller.forms import sellerform
@@ -12,7 +14,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.core.exceptions import PermissionDenied
 from seller.models import seller
 from django.template.defaultfilters import slugify
-
+from django.core.mail import EmailMessage
 
 # restrict the vendor from accessing the customerpage
 
@@ -45,10 +47,10 @@ def registerUser(request):
             user.set_password(password)
             user.role = User.CUSTOMER
             form.save()
-#send verification email
-            # mail_subject = 'Please activate your account'
-            # email_template = 'accounts/emails/account_verification_email.html'
-            # send_verification_email(request, user, mail_subject, email_template)
+# send verification email
+            mail_subject = 'Please activate your account'
+            email_template = 'accounts/emails/account_verification_email.html'
+            send_verification_email(request, user, mail_subject, email_template)
             messages.success(request,'the account has been registered successfully')
             return redirect('registerUser')
         
@@ -110,9 +112,22 @@ def registerSeller(request):
     return render(request,'accounts/registerSeller.html',context)
 
 
-# def activate(request,uidb64,token):
+def activate(request, uidb64, token):
+    # Activate the user by setting the is_active status to True
+    try:
+        uid = urlsafe_b64decode(uidb64).decode()
+        user = User._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
 
-#     return
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'Congratulation! Your account is activated.')
+        return redirect('myAccount')
+    else:
+        messages.error(request, 'Invalid activation link')
+        return redirect('myAccount')
 
 
 

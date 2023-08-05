@@ -37,6 +37,10 @@ urlpatterns = [
 
     path('checkout/', MarketplaceViews.checkout, name='checkout'),
 
+    #orders
+
+    path('orders/',include('orders.urls'))
+
     # path('login',views.login,name='login'),
     # path('register',views.register,name='register'),
 

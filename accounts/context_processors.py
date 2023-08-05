@@ -1,3 +1,4 @@
+from django.conf import settings
 from accounts.models import UserProfile
 from seller.models import seller
 
@@ -17,3 +18,8 @@ def get_user_profile(request):
     except:
         user_profile = None
     return dict(user_profile=user_profile)
+
+
+
+def get_paypal_client_id(request):
+    return {'PAYPAL_CLIENT_ID': settings.PAYPAL_CLIENT_ID}
