@@ -177,3 +177,6 @@ DEFAULT_FROM_EMAIL = 'MyFarm Marketplace <akhilkrishnakrishnas@gmail.com>'
 PAYPAL_CLIENT_ID = 'ASH4m9bqbX3Jex0yvTbdWsnBAiRE6jwMN65EN15eSGqbs47gAfqX27AfS-i8grq3G3Ebj0OpxRclGcSw'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
+
+RZP_KEY_ID='rzp_test_PAyS8L9p696rZb'
+RZP_KEY_SECRET='aHdT42iNbEsR8y5IhwaTccOf'
