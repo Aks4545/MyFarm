@@ -6,6 +6,7 @@ from accounts.forms import UserProfileForm
 from accounts.models import UserProfile
 from items.forms import CategoryForm, ProductForm
 from items.models import  product,category
+from orders.models import Order, Orderedproduct
 from .forms import OpeningHourForm, sellerform
 from .models import OpeningHour, seller
 from django.contrib.auth.decorators import login_required,user_passes_test
@@ -244,4 +245,31 @@ def remove_opening_hours(request, pk=None):
             hour = get_object_or_404(OpeningHour, pk=pk)
             hour.delete()
             return JsonResponse({'status': 'success', 'id': pk})
- 
+
+
+def order_detail(request, order_number):
+    try:
+        order = get_object_or_404(Order,order_number=order_number, is_ordered=True)
+        ordered_prod = Orderedproduct.objects.filter(order=order, products__vendor=get_vendor(request))
+
+        context = {
+            'order': order,
+            'ordered_prod': ordered_prod,
+            'subtotal': order.get_total_by_vendor()['subtotal'],
+            'tax_data': order.get_total_by_vendor()['tax_dict'],
+            'formatted_total': order.get_total_by_vendor()['formatted_total'],
+        }
+    except:
+        return redirect('vendor')
+    return render(request, 'vendor/order_detail.html', context)
+
+
+def my_orders(request):
+    vendor = seller.objects.get(user=request.user)
+    orders = Order.objects.filter(vendors__in=[vendor.id], is_ordered=True).order_by('created_at')
+
+    context = {
+        'orders':orders,
+    }
+
+    return render(request,'vendor/my_orders.html',context)

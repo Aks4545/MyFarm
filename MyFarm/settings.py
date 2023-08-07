@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+    'orders.request_object.RequestObjectMiddleware', # custom middleware created to access the request object in models.py    
 ]
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'

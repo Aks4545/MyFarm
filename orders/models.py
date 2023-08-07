@@ -1,7 +1,11 @@
+import json
 from django.db import models
+from django.shortcuts import get_object_or_404
 from accounts.models import User
 from items.models import product
 from seller.models import seller
+
+request_object = ''
 
 
 class Payment(models.Model):
@@ -55,7 +59,68 @@ class Order(models.Model):
     @property
     def name(self):
         return f'{self.first_name} {self.last_name}'
+    
+    def order_placed_to(self):
+        return ", ".join([str(i) for i in self.vendors.all()])
+    
 
+    def get_total_by_vendor(self):
+        vendor = get_object_or_404(seller,user=request_object.user)
+        subtotal = 0
+        tax = 0
+        tax_dict = {}
+        if self.total_data:
+            total_data = json.loads(self.total_data)
+            data = total_data.get(str(vendor.id))
+            
+            if data is not None:
+                for key, val in data.items():
+                    print(key, val)
+                    subtotal += float(key)
+                    val = val.replace("'", '"')
+                    val = json.loads(val)
+                    tax_dict.update(val)
+
+                 # calculate tax
+                # {'CGST': {'9.00': '6.03'}, 'SGST': {'7.00': '4.69'}}
+                    for i in val:
+                        for j in val[i]:
+                            tax += float(val[i][j])
+
+                grand_total = float(subtotal) + float(tax)
+                formatted_total = round(grand_total, 2)
+                context = {
+                    'subtotal': subtotal,
+                    'tax_dict': tax_dict, 
+                    'grand_total': grand_total,
+                    'formatted_total':formatted_total
+                }
+
+                return context
+                
+           
+
+        
+        #       for key,val in data.items():
+        #           print(key,val)
+        #         subtotal += float(key)
+        #         val = val.replace("'", '"')
+        #         val = json.loads(val)
+        #         tax_dict.update(val)
+
+        #         # calculate tax
+        #         # {'CGST': {'9.00': '6.03'}, 'SGST': {'7.00': '4.69'}}
+        #         for i in val:
+        #             for j in val[i]:
+        #                 tax += float(val[i][j])
+        # grand_total = float(subtotal) + float(tax)
+        # context = {
+        #     'subtotal': subtotal,
+        #     'tax_dict': tax_dict, 
+        #     'grand_total': grand_total,
+        # }
+
+        
     def __str__(self):
         return self.order_number
 

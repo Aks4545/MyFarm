@@ -3373,7 +3373,7 @@ span.list-feature-item { background: #00a79d; color: #ffffff; font-size: 12px; t
 /* cetagories fancy style start */
 /* location fancy style start */
 .location-holder.fancy { border: none; background: none; }
-.location-holder.fancy ul.location-list { border-left: 1px solid #e7e7e7; margin: 0 -20px 24px; padding: 15px 0 15px 40px; }
+.location-holder.fancy ul.location-list { border-left: 1px solid #e7e7e7; margin: 0 -20px 24px; padding: 15px 0 15px 30px; }
 .location-holder.fancy ul.location-list li span { color: #e51a1b; }
 .location-holder.fancy .more-btn-holder { padding-top: 30px; }
 .location-holder.fancy [class*="col-"]:first-child .location-list { border-left: 0; }
