@@ -4,7 +4,7 @@
 {% block content %}
 
 
-<div class="page-section restaurant-detail-image-section" style=" background: url({% static 'assets/img/1.jpg' %})">
+<div class="page-section product-detail-image-section" style=" background: url({% static 'assets/img/1.jpg' %})">
     <!-- Container Start -->
     <div class="container">
         <!-- Row Start -->
@@ -16,7 +16,7 @@
                         
 
                         <div class="text-holder">
-                            <span class="restaurant-title">CART</span>
+                            <span class="product-title"></span>
                            
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                                                     <td><img src="{{ item.product.image.url }}" width="40" alt="prod Image"></td>
                                                     <td><b>{{ item.product }}</b></td>
                                                     <td>{{ item.quantity }}</td>
-                                                    <td>${{ item.product.price }}</td>
+                                                    <td>Rs.{{ item.product.price }}</td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
@@ -102,7 +102,7 @@
                                             <li style="list-style-type: none;">
                                                 Subtotal
                                                 <span class="price float-right">
-                                                    <span class="currency">$</span>
+                                                    <span class="currency">Rs.</span>
                                                     <span id="subtotal">{{ subtotal }}</span>
                                                 </span>
                                             </li>
@@ -112,7 +112,7 @@
                                                     <li style="list-style-type: none;">
                                                         {{ key }} <small>({{ i }}%)</small>
                                                         <span class="price float-right">
-                                                            <span class="currency">$</span>
+                                                            <span class="currency">Rs.</span>
                                                             <span id="tax-{{ key }}">{{ j }}</span>
                                                         </span>
                                                     </li>
@@ -123,7 +123,7 @@
                                             <li style="list-style-type: none; font-weight: 600;">
                                                 TOTAL
                                                 <span class="price float-right">
-                                                    <span class="currency">$</span>
+                                                    <span class="currency">Rs.</span>
                                                     <span id="total">{{ grand_total }}</span>
                                                 </span>
                                             </li>

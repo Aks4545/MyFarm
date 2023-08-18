@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Hi {{user.first_name}},
+
+{% if is_approved %}
+Congratulations! Your restaurant has been approved by our admin team. --MyFarm
+{% else %}
+We're sorry! You are not eligible . For more details, please contact support@myfarm.com. --MyFarm
+{% endif %}
+
+
+
+{% endautoescape %}

@@ -2,8 +2,9 @@ from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 import simplejson as json
 from django.shortcuts import get_object_or_404, redirect, render
+from accounts.utils import send_notification
 from items.models import product
-
+from django.contrib.sites.shortcuts import get_current_site
 from marketplace.models import Cart, Tax
 from marketplace.context_processors import get_cart_amounts
 from . forms import orderForm
@@ -135,7 +136,7 @@ def payments(request):
         order.save()
 
         
-        # MOVE THE CART ITEMS TO ORDERED FOOD MODEL
+        # MOVE THE CART ITEMS TO ORDERED  MODEL
         cart_items = Cart.objects.filter(user=request.user)
         for item in cart_items:
             ordered_product = Orderedproduct()
@@ -148,12 +149,14 @@ def payments(request):
             ordered_product.amount = item.product.price * item.quantity # total amount
             ordered_product.save()
         
-        # SEND ORDER CONFIRMATION EMAIL TO THE CUSTOMER        
+        # SEND ORDER CONFIRMATION EMAIL TO THE CUSTOMER     
+     
 
         # SEND ORDER RECEIVED EMAIL TO THE VENDOR
 
+       
         # CLEAR THE CART IF THE PAYMENT IS SUCCESS
-        # cart_items.delete() 
+        cart_items.delete() 
 
         # RETURN BACK TO AJAX WITH THE STATUS SUCCESS OR FAILURE
         response = {

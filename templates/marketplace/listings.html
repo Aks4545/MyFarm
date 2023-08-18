@@ -4,7 +4,7 @@
 {%  block content %}
 
 
-<div class="page-section restaurant-detail-image-section" style=" background: url({% static 'assets/img/1.jpg' %})">
+<div class="page-section product-detail-image-section" style=" background: url({% static 'assets/img/1.jpg' %})">
     <!-- Container Start -->
     <div class="container">
         <!-- Row Start -->
@@ -16,7 +16,7 @@
                         
 
                         <div class="text-holder">
-                            <span class="restaurant-title">MARKET PLACE</span>
+                            <span class="product-tit">MARKET PLACE</span>
                            
                         </div>
                     </div>
@@ -63,9 +63,9 @@
                                                         {% endif %}                                                    </a>
                                                 </figure>
                                                 {% if vendor.is_open %}
-                                                <span class="restaurant-status open"><em class="bookmarkRibbon"></em>Open</span>
+                                                <span class="product-status open"><em class="bookmarkRibbon"></em>Open</span>
                                                 {% else %}
-                                                <span class="restaurant-status close"><em class="bookmarkRibbon"></em>Close</span>
+                                                <span class="product-status close"><em class="bookmarkRibbon"></em>Close</span>
                                                 {% endif %}
                                                                                          
                                               </div>
@@ -101,7 +101,7 @@
                             </div>
                             <div class="section-sidebar col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="message-box" style="background-color: #38b450;">
-                                    <strong>I'm not Listed!</strong><span>is your restaurant or
+                                    <strong>I'm not Listed!</strong><span>is your product or
                                         business not
                                         listed on over site</span>
                                     <a href="{% url 'registerSeller' %}" class="request-btn">Add Your business!</a>

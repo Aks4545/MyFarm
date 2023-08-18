@@ -1,5 +1,5 @@
 {% load static %}
-<div class="page-section restaurant-detail-image-section" style=" background: url({% if user_profile.cover_photo %}{{ user_profile.cover_photo.url }} {% else %} {% static 'assets/img/1.jpg' %} {% endif %} ) no-repeat scroll 0 0 / cover;">
+<div class="page-section product-detail-image-section" style=" background: url({% if user_profile.cover_photo %}{{ user_profile.cover_photo.url }} {% else %} {% static 'assets/img/1.jpg' %} {% endif %} ) no-repeat scroll 0 0 / cover;">
     <!-- Container Start -->
     <div class="container">
         <!-- Row Start -->
@@ -19,7 +19,7 @@
                         </div>
 
                         <div class="text-holder">
-                            <span class="restaurant-title">{{ user.first_name }} {{ user.last_name }}</span>
+                            <span class="product-title">{{ user.first_name }} {{ user.last_name }}</span>
                             <div class="text">
                                 <i class="icon-phone"></i>
                                 <p>{{ user.mobile_no }}</p>

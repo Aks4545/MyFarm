@@ -7,7 +7,7 @@
 
 			<!-- Main Section Start -->
 			<div class="main-section">
-                <div class="page-section restaurant-detail-image-section" style="background: url({% if vendor.user_profile.cover_photo %} {{ vendor.user_profile.cover_photo.url }} {% else %} {% static 'assets/img/bg-1.jpg' %} {% endif %}) no-repeat scroll 0 0 / cover;">					<!-- Container Start -->
+                <div class="page-section product-detail-image-section" style="background: url({% if vendor.user_profile.cover_photo %} {{ vendor.user_profile.cover_photo.url }} {% else %} {% static 'assets/img/bg-1.jpg' %} {% endif %}) no-repeat scroll 0 0 / cover;">					<!-- Container Start -->
 					<div class="container">
 						<!-- Row Start -->
 						<div class="row">
@@ -24,7 +24,7 @@
                                                 {% endif %}											</figure>
 										</div>
 										<div class="text-holder">
-											<span class="restaurant-title"> {{ vendor.seller_name }}  {% if not vendor.is_open %}[Closed]{% endif %}</span>
+											<span class="product-title"> {{ vendor.seller_name }}  {% if not vendor.is_open %}[Closed]{% endif %}</span>
 											<div class="text">
 											{% if vendor.user_profile.address %}
                                 			<i class="icon-location"></i>
@@ -71,7 +71,7 @@
 							
 								<div class="filter-wrapper">
 									<div class="categories-menu">
-										<h6><i class="icon-restaurant_menu"></i>Categories</h6>
+										<h6><i class="icon-product_menu"></i>Categories</h6>
 										<ul class="menu-list">
 											{% for category in categories %}
 											<li class="active"><a href="#" class="menu-category-link"> {{category}} </a></li>
@@ -106,7 +106,7 @@
 																<span>{{ prod.description }}</span>
 															</div>
 															<div class="price-holder">
-																<span class="price">${{ prod.price }}</span>
+																<span class="price">Rs.{{ prod.price }}/KG</span>
 			
 																<a href="#" class="decrease_cart" data-id="{{ prod.id }}" data-url="{% url 'decrease_cart' prod.id %}" style="margin-right: 28px;"><i class="fas fa-minus-circle btn-success"></i></a>
 																<label id="qty-{{prod.id}}">0</label>

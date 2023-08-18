@@ -2169,7 +2169,7 @@
 .icon-local_convenience_store:before {
   content: "\e543";
 }
-.icon-restaurant_menu:before {
+.icon-product_menu:before {
   content: "\e561";
 }
 .icon-local_drink:before {
@@ -2712,7 +2712,7 @@
 .icon-warning3:before {
   content: "\e09f";
 }
-.icon-restaurant:before {
+.icon-product:before {
   content: "\e56c";
 }
 .icon-restore_page:before {

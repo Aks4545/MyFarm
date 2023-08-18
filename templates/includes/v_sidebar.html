@@ -2,14 +2,13 @@
 
 <div class="user-nav-list">
     <ul>
-        <li class="{% if '/accounts/vendorDashboard/' == request.path or '/vendor/' == request.path %}active{% endif %}"><a href="{% url 'vendorDashboard' %}"><i class="icon-dashboard3"></i>Dashboard</a></li>
-        <li class="{% if 'profile' in request.path %}active{% endif %}"><a href="{% url 'vprofile' %}"><i class="icon-building"></i>My Farm</a></li>
-        <li class="{% if 'product_add' in request.path %}active{% endif %}"><a href="{% url 'product_add' %}"><i class="icon-menu5"></i>Add Products</a></li>
-        <li class="{% if 'opening_hour' in request.path %}active{% endif %}"><a href="{% url 'opening_hours' %}"><i class="icon-menu5"></i>Opening Hours</a></li>
+        <li class="{% if '/accounts/vendorDashboard/' == request.path or '/vendor/' == request.path %}active{% endif %}"><a href="{% url 'vendorDashboard' %}"><i class="fas fa-database"></i>Dashboard</a></li>
+        <li class="{% if 'profile' in request.path %}active{% endif %}"><a href="{% url 'vprofile' %}"><i class="fas fa-pencil-ruler"></i>My Farm</a></li>
+        <li class="{% if 'product_add' in request.path %}active{% endif %}"><a href="{% url 'product_add' %}"><i class="fas fa-plus-square"> </i>Add Products</a></li>
+        <li class="{% if 'opening_hour' in request.path %}active{% endif %}"><a href="{% url 'opening_hours' %}"><i class="fas fa-clock"></i>Opening Hours</a></li>
 
-        <li class="{% if '/my_orders/' in request.path %}active{% endif %}"><a href="{% url 'vendor_my_orders' %}"><i class="icon-menu5"></i>Orders</a></li>
-        <!-- <li class=""><a href="restaurant-earnings.html"><i class="icon-money"></i>Earnings</a></li> -->
-        <li><a href="restaurant-change-password.html"><i class="icon-unlock-alt"></i>Change Password</a></li>
-        <li><a class="logout-btn" href="{% url 'logout' %}"><i class="icon-log-out"></i>Signout</a></li>
+        <li class="{% if '/my_orders/' in request.path %}active{% endif %}"><a href="{% url 'vendor_my_orders' %}"><i class="fas fa-server"></i>Orders</a></li>
+        <!-- <li class=""><a href="product-earnings.html"><i class="icon-money"></i>Earnings</a></li> -->
+        <li><a class="logout-btn" href="{% url 'logout' %}"><i class="fas fa-arrow-alt-circle-left"></i>Signout</a></li>
     </ul>
 </div>

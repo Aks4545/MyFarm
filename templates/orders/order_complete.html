@@ -3,7 +3,7 @@
 {% block content %}
 
 
-<div class="page-section restaurant-detail-image-section" style=" background: url({% static 'assets/img/1.jpg' %})">
+<div class="page-section product-detail-image-section  " style=" background: url({% static 'assets/img/1.jpg' %}); height: -5%">
     <!-- Container Start -->
     <div class="container">
         <!-- Row Start -->
@@ -15,7 +15,7 @@
                         
 
                         <div class="text-holder">
-                            <span class="restaurant-title">CART</span>
+                            <span class="product-title"></span>
                            
                         </div>
                     </div>
@@ -29,12 +29,12 @@
 </div>
 
 
-<div class="container mt-8 mb-8">
+<div class="container mt-5 mb-5">
     <div class="justify-content-center row md-8">
         <div class="col-md-8">
             <div class="bg-white p-3">
-                <img src="{% static 'assets/img/logo1.png' %}" alt="MyFarm Logo" width="300">
-                <div class="row">
+                <img src="{% static 'assets/img/logo8.png' %}" alt="MyFarm Logo" width="300" class="mt-4">
+                <div class="row  mt-4">
                     <div class="col-md-6">
                         <h4 class="mt-2 mb-3">Thank you for your order.</h4>
                     </div>
@@ -70,10 +70,10 @@
                         <tr>
                             <td><img src="{{ item.products.image.url }}" width="60" alt="product Image"></td>
                             <td>
-                                <p class="mb-0"><b>{{ item.products }}</b></p>
-                                <a class="text-muted" href="">{{ item.products.vendor.seller_name }}</a>
+                                <a class="mb-0"><b>{{ item.products }}</b></a>
+                                <p class="text-muted" href="">{{ item.products.vendor.seller_name }}</p>
                             </td>
-                            <td>{{ item.quantity }} QTY</td>
+                            <td>{{ item.quantity }}.Kg</td>
                             <td>Rs{{ item.products.price }}</td>
                         </tr>
                         {% endfor %}
@@ -89,7 +89,7 @@
                             <li style="list-style-type: none;">
                                 Subtotal
                                 <span class="price float-right">
-                                    <span class="currency">$</span>
+                                    <span class="currency">Rs.</span>
                                     <span id="subtotal">{{ subtotal }}</span>
                                 </span>
                             </li>
@@ -99,7 +99,7 @@
                                     <li style="list-style-type: none;">
                                         {{ key }} <small>({{ i }}%)</small>
                                         <span class="price float-right">
-                                            <span class="currency">$</span>
+                                            <span class="currency">Rs.</span>
                                             <span id="tax-{{ key }}">{{ j }}</span>
                                         </span>
                                     </li>
@@ -110,7 +110,7 @@
                             <li style="list-style-type: none; font-weight: 600;">
                                 TOTAL
                                 <span class="price float-right">
-                                    <span class="currency">$</span>
+                                    <span class="currency">Rs.</span>
                                     <span id="total">{{ order.total }}</span>
                                 </span>
                             </li>

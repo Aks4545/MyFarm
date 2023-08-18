@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
-
     'category',
     'accounts',
     'seller',
@@ -170,7 +169,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
-DEFAULT_FROM_EMAIL = 'MyFarm Marketplace <akhilkrishnakrishnas@gmail.com>'
+DEFAULT_FROM_EMAIL = 'MyFarm Marketplace <myfarmsuperuser@gmail.com>'
 
 
 

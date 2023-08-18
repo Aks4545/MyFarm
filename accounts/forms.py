@@ -1,6 +1,8 @@
 from django import forms
-from .models import User,UserProfile
+from .models import User,UserProfile, contact
 from .validators import allow_only_images_validator
+
+
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
@@ -31,7 +33,7 @@ class UserProfileForm(forms.ModelForm):
     # longitude = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
     class Meta:
         model = UserProfile
-        fields = ['profile_photo', 'cover_photo', 'address','mobile_no','pin_code','state','city']
+        fields = ['profile_photo', 'cover_photo', 'address','mobile_no','pin_code','state','District','city']
 
 
 
@@ -40,3 +42,10 @@ class UserInfoForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'mobile_no']
+
+
+
+class contactForm(forms.ModelForm):
+    class Meta:
+        model = contact
+        fields = ['name', 'email', 'phone','subject','message']

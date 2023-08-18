@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 
 from marketplace import views as MarketplaceViews
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home,name='home'),
