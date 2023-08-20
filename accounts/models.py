@@ -39,9 +39,6 @@ class UserManager(BaseUserManager):
         return user
     
 
-
-
-
 class User(AbstractBaseUser):
     VENDOR = 1
     CUSTOMER = 2 

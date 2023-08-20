@@ -52,7 +52,7 @@ def registerUser(request):
             user.set_password(password)
             user.role = User.CUSTOMER
             form.save()
-# Send verification email
+            # Send verification email
             mail_subject = 'Please activate your account'
             email_template = 'accounts/emails/account_verification_email.html'
             send_verification_email(request, user, mail_subject, email_template)
